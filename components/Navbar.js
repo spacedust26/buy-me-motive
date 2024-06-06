@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
 
 const Navbar = () => {
@@ -16,10 +16,10 @@ const Navbar = () => {
 
   return (
     <nav className='bg-[#070F2B] text-white flex justify-between items-center px-4 h-16'>
-      <div className="logo font-bold text-lg flex justify-center items-center gap-1">
+      <Link href={"/"} className="logo font-bold text-lg flex justify-center items-center gap-1">
         <img src='pig.gif' width={35} alt='pig' />
         <span>BuyMeMotive</span>
-      </div>
+      </Link>
       {/* <ul className='flex justify-between gap-4'>
         <li>Home</li>
         <li>About</li>
@@ -30,10 +30,12 @@ const Navbar = () => {
 
       <div className='relative'>
         {session && <>
-          <button onClick={()=>setShowdropdown(!showdropdown)} id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className="text-white mx-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-purple-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-purple-600" type="button">
-          Welcome {session.user.email} <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-          </svg>
+          <button onClick={() => setShowdropdown(!showdropdown)} onBlur={()=> {setTimeout(()=>{
+            setShowdropdown(false)
+          },100);}} id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className="text-white mx-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-purple-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-purple-600" type="button">
+            Welcome {session.user.email} <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+            </svg>
           </button>
 
           <div id="dropdown" className={`z-10 ${showdropdown ? "" : "hidden"} absolute left-[135px] bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}>
@@ -42,23 +44,18 @@ const Navbar = () => {
                 <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>
               </li>
               <li>
-                <Link href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</Link>
+                <Link href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Your Page</Link>
               </li>
               <li>
-                <Link href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</Link>
-              </li>
-              <li>
-                <Link onClick={()=> signOut()} href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</Link>
+                <Link onClick={() => signOut()} href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</Link>
               </li>
             </ul>
           </div>
         </>
         }
 
-
-
         {session &&
-          <button className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'>
+          <button onClick={()=>{signOut()}} className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'>
             Logout
           </button>}
 
